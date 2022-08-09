@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redux</title>
+    <script src="./immer.umd.production.min.js"></script>
     <script src="./redux.min.js"></script>
 </head>
 
@@ -23,25 +24,51 @@
             nome: 'Gabriel',
             idade: 21
         }
-        // const obj2 = Object.assign({}, obj1, { nome: 'Maria' });
-        const obj2 = { ...obj1, nome: 'Maria' };
-        console.log(obj1 === obj2);
-        console.log(obj1);
-        console.log(obj2);
 
+        const obj2 = immer.produce(obj1, draft => {
+            draft.idade = 35
+        });
 
+        // console.log(obj2)
+        // console.log(obj1)
+        // // const obj2 = Object.assign({}, obj1, { nome: 'Maria' });
+        // const obj2 = { ...obj1, nome: 'Maria' };
+        // console.log(obj1 === obj2);
+        // console.log(obj1);
+        // console.log(obj2);
 
         const initialState = {
             nome: 'Gabriel',
-            idade: 21
+            sobre: {
+                dados: {
+                    idade: 31
+                }
+            }
         }
 
-        function reducer(state = initialState, action) {
+        // const reducer = immer.produce((state, action) => {
+        //     switch (action.type) {
+        //         case 'MUDAR_NOME':
+        //             state.nome = action.payload;
+        //             break;
+        //         case 'MUDAR_IDADE':
+        //             state.sobre.dados.idade = action.payload;
+        //             break;
+
+        //     }
+        // }, initialState)
+
+        const reducer = (state = initialState, action) => {
             switch (action.type) {
                 case 'MUDAR_NOME':
+                    state.nome = action.payload;
                     return { ...state, nome: action.payload };
+                case 'MUDAR_IDADE':
+                    state.sobre.dados.idade = action.payload;
+                    return { ...state, sobre: { ...state.sobre, dados: { ...state.sobre.dados, idade: action.payload } } };
                 default:
                     return state;
+
             }
         }
 
@@ -54,6 +81,8 @@
         store.dispatch({ type: 'MUDAR_NOME', payload: 'Maria' });
         store.dispatch({ type: 'MUDAR_NOME', payload: 'João' });
         store.dispatch({ type: 'MUDAR_NOME', payload: 'Pedro' });
+        store.dispatch({ type: 'MUDAR_IDADE', payload: 20 });
+        store.dispatch({ type: 'MUDAR_IDADE', payload: 35 });
         store.dispatch({ type: 'TESTE', payload: 'Pedro' });
     </script>
 </body>
