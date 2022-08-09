@@ -9,14 +9,31 @@
     <script src="./immer.umd.production.min.js"></script>
     <script src="./redux.min.js"></script>
 </head>
+<div>
+    <p id="nome"></p>
+    <p id="email"></p>
+    <p id="tempoRestante"></p>
+    <p id="totalAulasCompletadas"></p>
+</div>
 
 <body>
     <script type="module">
         import store from './store/configureStore.js';
-        import { incrementarTempo, reduzirTempo, modificarEmail, completarAula, completarCurso, resetarCurso } from './store/aula.js'
+        import { completarAula, completarCurso, resetarCurso } from './store/aula.js'
+        import { incrementarTempo, reduzirTempo, modificarEmail, } from './store/aluno.js'
 
         store.subscribe(() => {
-            console.log('Funcionou');
+            const state = store.getState();
+
+            const nome = document.getElementById('nome');
+            const email = document.getElementById('email');
+            const tempoRestante = document.getElementById('tempoRestante');
+            const totalAulasCompletadas = document.getElementById('totalAulasCompletadas');
+
+            nome.innerHTML = `<p> Nome: ${state.aluno.nome}</p>`;
+            email.innerHTML = `<p> Email: ${state.aluno.email}</p>`;
+            tempoRestante.innerHTML = `<p> Tempo Restante: ${state.aluno.diasRestantes}</p>`;
+            totalAulasCompletadas.innerHTML = `<p>Total de aulas completas: ${state.aula.filter(aula => aula.completa).length}</p>`;
         });
 
         store.dispatch(incrementarTempo());
