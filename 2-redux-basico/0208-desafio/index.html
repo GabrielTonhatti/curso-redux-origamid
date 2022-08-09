@@ -30,10 +30,10 @@
             const tempoRestante = document.getElementById('tempoRestante');
             const totalAulasCompletadas = document.getElementById('totalAulasCompletadas');
 
-            nome.innerHTML = `<p> Nome: ${state.aluno.nome}</p>`;
-            email.innerHTML = `<p> Email: ${state.aluno.email}</p>`;
-            tempoRestante.innerHTML = `<p> Tempo Restante: ${state.aluno.diasRestantes}</p>`;
-            totalAulasCompletadas.innerHTML = `<p>Total de aulas completas: ${state.aula.filter(aula => aula.completa).length}</p>`;
+            nome.innerText = `Nome: ${state.aluno.nome}`;
+            email.innerText = `Email: ${state.aluno.email}`;
+            tempoRestante.innerText = `Tempo Restante: ${state.aluno.diasRestantes}`;
+            totalAulasCompletadas.innerText = `otal de aulas completas: ${state.aula.filter(aula => aula.completa).length}`;
         });
 
         store.dispatch(incrementarTempo());

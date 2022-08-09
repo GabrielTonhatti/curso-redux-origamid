@@ -2,6 +2,10 @@ const COMPLETAR_AULA = "aula/COMPLETAR_AULA";
 const COMPLETAR_CURSO = "aula/COMPLETAR_CURSO";
 const RESETAR_CURSO = "aula/RESETAR_CURSO";
 
+export const completarAula = (id) => ({ type: COMPLETAR_AULA, payload: id });
+export const completarCurso = () => ({ type: COMPLETAR_CURSO });
+export const resetarCurso = () => ({ type: RESETAR_CURSO });
+
 const aulas = [
     {
         id: 1,
@@ -25,16 +29,13 @@ const aulas = [
     },
 ];
 
-export const completarAula = (payload) => ({ type: COMPLETAR_AULA, payload });
-export const completarCurso = () => ({ type: COMPLETAR_CURSO });
-export const resetarCurso = () => ({ type: RESETAR_CURSO });
-
 const initialState = aulas;
 
 const reducer = immer.produce((state, action) => {
     switch (action.type) {
         case COMPLETAR_AULA:
-            state.find((aula) => aula.id === action.payload).completa = true;
+            const index = state.findIndex((aula) => aula.id === action.payload);
+            if (!isNaN(index) && state[index]) state[index].completa = true;
             break;
         case COMPLETAR_CURSO:
             state.forEach((aula) => (aula.completa = true));
