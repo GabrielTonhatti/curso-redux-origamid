@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadNewPhotos } from "../store/photos";
 import styles from "./PhotosLoadMore.module.css";
-import Loading from "../Helper/Loading";
+import Loading from "./Helper/Loading";
 
 const PhotosLoadMore = () => {
     const { pages, infinite, loading } = useSelector((state) => state.photos);

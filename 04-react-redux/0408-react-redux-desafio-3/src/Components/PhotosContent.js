@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styles from "./PhotoContent.module.css";
+import styles from "./PhotosContent.module.css";
 
 const PhotosContent = () => {
     const { list } = useSelector((state) => state.photos);

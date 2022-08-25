@@ -5,18 +5,20 @@ import styles from "./Header.module.css";
 
 const Header = () => {
     const { user, token } = useSelector((state) => state.login);
-    const loading = user.loading || token.loading;
-    const disptach = useDispatch();
+    const loading = token.loading || user.loading;
+    const dispatch = useDispatch();
 
     return (
         <header className={styles.header}>
             <h1 className={styles.title}>Mini Dogs</h1>
             <button
-                onClick={() => disptach(userLogout())}
-                className={`${styles.login} 
-                    ${loading ? styles.loading : ""}
-                    ${user.data ? styles.loaded : ""}`}
+                onClick={() => dispatch(userLogout())}
                 aria-label="Logout"
+                className={`
+        ${styles.login}
+        ${loading ? styles.loading : ""}
+        ${user.data ? styles.loaded : ""}
+        `}
             ></button>
         </header>
     );

@@ -11,7 +11,7 @@ body {
 .anime {
     opacity: 0;
     transform: translateX(-10px);
-    animation: anime 0.3 forwards;
+    animation: anime 0.3s forwards;
 }
 
 @keyframes anime {

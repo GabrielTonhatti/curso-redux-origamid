@@ -11,7 +11,6 @@ const photos = createAsyncSlice({
         addPhotos(state, action) {
             state.list.push(...action.payload);
             state.pages++;
-
             if (action.payload.length === 0) state.infinite = false;
         },
         removePhotos(state) {
