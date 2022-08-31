@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Loading from "../Helper/Loading";
 import NotFound from "../NotFound";
 import styles from "./Login.module.css";
 import LoginCreate from "./LoginCreate";
@@ -9,8 +10,9 @@ import LoginPasswordLost from "./LoginPasswordLost";
 import LoginPasswordReset from "./LoginPasswordReset";
 
 const Login = () => {
-    const { data } = useSelector((state) => state.user);
+    const { data, loading } = useSelector((state) => state.user);
 
+    if (loading) return <Loading />;
     if (data) return <Navigate to="/conta" />;
 
     return (
