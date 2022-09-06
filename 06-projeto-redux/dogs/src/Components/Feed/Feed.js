@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadNewPhotos, resetFeedState } from "../../store/feed";
 import Loading from "../Helper/Loading";
 import Error from "../Helper/Error";
+import { resetPhotoState } from "../../store/photoPost";
 
 const Feed = ({ user }) => {
     const { infinite, loading, list, error } = useSelector(
@@ -15,6 +16,7 @@ const Feed = ({ user }) => {
 
     React.useEffect(() => {
         dispatch(resetFeedState());
+        dispatch(resetPhotoState());
         dispatch(loadNewPhotos({ user, total: 6 }));
     }, [dispatch, user]);
 
