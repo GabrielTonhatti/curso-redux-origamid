@@ -1,21 +1,25 @@
 import React from "react";
-import styles from "./UserPhotoPost.module.css";
-import useForm from "../../Hooks/useForm";
-import useFetch from "../../Hooks/useFetch";
-import Input from "../Forms/Input";
-import Button from "../Forms/Button";
-import Error from "../Helper/Error";
-import { PHOTO_POST } from "../../Api";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import useForm from "../../Hooks/useForm";
+import { photoPost } from "../../store/photoPost";
+import Button from "../Forms/Button";
+import ButtonLoading from "../Forms/ButtonLoading";
+import Input from "../Forms/Input";
+import InputFile from "../Forms/InputFile";
+import Error from "../Helper/Error";
 import Head from "../Helper/Head";
+import styles from "./UserPhotoPost.module.css";
 
 const UserPhotoPost = () => {
     const nome = useForm();
     const peso = useForm("number");
     const idade = useForm("number");
     const [img, setImg] = React.useState({});
-    const { data, error, loading, request } = useFetch();
+    const { data, error, loading } = useSelector((state) => state.photoPost);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { token } = useSelector((state) => state.token.data);
 
     React.useEffect(() => {
         if (data) navigate("/conta");
@@ -23,21 +27,21 @@ const UserPhotoPost = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
+
         const formData = new FormData();
         formData.append("img", img.raw);
         formData.append("nome", nome.value);
         formData.append("peso", peso.value);
         formData.append("idade", idade.value);
 
-        const token = window.localStorage.getItem("token");
-        const { url, options } = PHOTO_POST(formData, token);
-        request(url, options);
+        dispatch(photoPost({ formData, token }));
     }
 
     function handleImgChange({ target }) {
         setImg({
             preview: URL.createObjectURL(target.files[0]),
             raw: target.files[0],
+            name: target.files[0].name,
         });
     }
 
@@ -48,18 +52,15 @@ const UserPhotoPost = () => {
                 <Input label="Nome" type="text" name="nome" {...nome} />
                 <Input label="Peso" type="number" name="peso" {...peso} />
                 <Input label="Idade" type="number" name="idade" {...idade} />
-                <input
-                    className={styles.file}
-                    type="file"
+                <InputFile
                     name="img"
                     id="img"
+                    label="Selecione uma imagem"
+                    accept="image/*"
                     onChange={handleImgChange}
+                    value={img.name}
                 />
-                {loading ? (
-                    <Button disabled>Enviando...</Button>
-                ) : (
-                    <Button>Enviar</Button>
-                )}
+                {loading ? <ButtonLoading /> : <Button>Enviar</Button>}
                 <Error error={error} />
             </form>
             <div>

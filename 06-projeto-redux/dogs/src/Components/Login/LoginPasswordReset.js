@@ -1,11 +1,12 @@
 import React from "react";
-import Input from "../Forms/Input";
-import Button from "../Forms/Button";
-import useForm from "../../Hooks/useForm";
-import useFetch from "../../Hooks/useFetch";
-import { PASSWORD_RESET } from "../../Api";
-import Error from "../Helper/Error";
 import { useNavigate } from "react-router-dom";
+import { PASSWORD_RESET } from "../../Api";
+import useFetch from "../../Hooks/useFetch";
+import useForm from "../../Hooks/useForm";
+import Button from "../Forms/Button";
+import ButtonLoading from "../Forms/ButtonLoading";
+import Input from "../Forms/Input";
+import Error from "../Helper/Error";
 import Head from "../Helper/Head";
 
 const LoginPasswordReset = () => {
@@ -47,11 +48,7 @@ const LoginPasswordReset = () => {
                     name="password"
                     {...password}
                 />
-                {loading ? (
-                    <Button disabled>Resetando...</Button>
-                ) : (
-                    <Button>Resetar</Button>
-                )}
+                {loading ? <ButtonLoading /> : <Button>Resetar</Button>}
             </form>
             <Error error={error} />
         </section>

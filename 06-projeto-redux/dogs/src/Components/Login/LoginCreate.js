@@ -1,13 +1,14 @@
 import React from "react";
-import Input from "../Forms/Input";
-import Button from "../Forms/Button";
-import Error from "../Helper/Error";
-import useForm from "../../Hooks/useForm";
+import { useDispatch } from "react-redux";
 import { USER_POST } from "../../Api";
 import useFetch from "../../Hooks/useFetch";
-import Head from "../Helper/Head";
-import { useDispatch } from "react-redux";
+import useForm from "../../Hooks/useForm";
 import { userLogin } from "../../store/user";
+import Button from "../Forms/Button";
+import ButtonLoading from "../Forms/ButtonLoading";
+import Input from "../Forms/Input";
+import Error from "../Helper/Error";
+import Head from "../Helper/Head";
 
 const LoginCreate = () => {
     const username = useForm();
@@ -52,11 +53,7 @@ const LoginCreate = () => {
                     name="password"
                     {...password}
                 />
-                {loading ? (
-                    <Button disabled>Cadastrando...</Button>
-                ) : (
-                    <Button>Cadastrar</Button>
-                )}
+                {loading ? <ButtonLoading /> : <Button>Cadastrar</Button>}
                 <Error error={error} />
             </form>
         </section>

@@ -6,6 +6,7 @@ import useFetch from "../../Hooks/useFetch";
 import { PASSWORD_LOST } from "../../Api";
 import Error from "../Helper/Error";
 import Head from "../Helper/Head";
+import ButtonLoading from "../Forms/ButtonLoading";
 
 const LoginPasswordLost = () => {
     const login = useForm();
@@ -38,7 +39,7 @@ const LoginPasswordLost = () => {
                         {...login}
                     />
                     {loading ? (
-                        <Button disabled>Enviando...</Button>
+                        <ButtonLoading />
                     ) : (
                         <Button>Enviar Email</Button>
                     )}

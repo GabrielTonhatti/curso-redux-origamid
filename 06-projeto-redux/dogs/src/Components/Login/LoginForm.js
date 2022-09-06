@@ -1,14 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Input from "../Forms/Input";
-import Button from "../Forms/Button";
-import useForm from "../../Hooks/useForm";
-import Error from "../Helper/Error";
-import styles from "./LoginForm.module.css";
-import stylesBtn from "../Forms/Button.module.css";
-import Head from "../Helper/Head";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import useForm from "../../Hooks/useForm";
 import { userLogin } from "../../store/user";
+import Button from "../Forms/Button";
+import stylesBtn from "../Forms/Button.module.css";
+import ButtonLoading from "../Forms/ButtonLoading";
+import Input from "../Forms/Input";
+import Error from "../Helper/Error";
+import Head from "../Helper/Head";
+import styles from "./LoginForm.module.css";
 
 const LoginForm = () => {
     const username = useForm();
@@ -49,11 +50,7 @@ const LoginForm = () => {
                     name="password"
                     {...password}
                 />
-                {loading ? (
-                    <Button disabled>Carregando...</Button>
-                ) : (
-                    <Button>Entrar</Button>
-                )}
+                {loading ? <ButtonLoading /> : <Button>Entrar</Button>}
                 <Error error={error && "Dados incorretos."} />
             </form>
             <Link className={styles.perdeu} to="/login/perdeu">
